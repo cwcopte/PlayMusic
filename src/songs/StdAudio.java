@@ -423,13 +423,13 @@ public final class StdAudio {
 		}
 
 		// scale increments
-		int[] steps = { 0, 2, 4, 5, 7, 9, 11, 12 };
+		//int[] steps = { 0, 2, 4, 5, 7, 9, 11, 12 };
+		int[] steps = { 0, 2, 3, 5, 7, 8, 10, 12 };
 		for (int i = 0; i < steps.length; i++) {
 			double hz = 440.0 * Math.pow(2, steps[i] / 12.0);
 			StdAudio.play(note(hz, 1.0, 0.5));
 			
 		}
-
 		// need to call this in non-interactive stuff so the program doesn't
 		// terminate
 		// until all the sound leaves the speaker.

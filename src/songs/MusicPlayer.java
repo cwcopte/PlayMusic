@@ -8,6 +8,7 @@ package songs;
  * of your Song class.
  */
 
+
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -21,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.awt.event.ActionEvent;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -88,6 +90,7 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		String cmd = event.getActionCommand();
 		if (cmd.equals("Play")) {
 			//fill this 
+			stop.setEnabled(false);
 		} else if (cmd.equals("Pause")) {
 			StdAudio.setPaused(!StdAudio.isPaused());
 		} else if (cmd == "Stop") {
@@ -101,9 +104,16 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 			}
 		} else if (cmd == "Reverse") {
 			//TODO - fill this 
+			
 		} else if (cmd == "Up") {
 			//TODO - fill this
 		} else if (cmd == "Down") {
+			/*
+			//frame.add(fileChooser,BorderLayout.NORTH);
+			JFrame frame1= new JFrame();
+			frame1.setSize(100, 100);
+			frame1.setVisible(true);
+			 */
 			//TODO - fill this
 		} else if (cmd == "Change Tempo") {
 			//TODO - fill this
@@ -127,7 +137,18 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		MusicPlayer player= new MusicPlayer();
 		player.createComponents();
 	}
+	//can we combine all in one actionListener?
+	//or we have to create different class for each one
+	//this is an inner class that implements a listener
+	class changeListener implements ActionListener{
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			//what happens when you click?
+			change.setEnabled(false);
+			change.setText("success");
+		}
 
+	}
 
 	/*
 	 * Sets up the graphical components in the window and event listeners.
@@ -143,6 +164,7 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
 		change=new JButton("Change");
+		change.addActionListener(new changeListener());
 		tempoLabel=new JLabel("Tempo");
 		//set default text!
 		tempoText= new JTextField("enter your tempo. default is 1.");
@@ -199,7 +221,7 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 	private void doEnabling() {
 		//TODO - figure out which buttons need to enabled
 		// this.setEnabled(false); 
-		play.setEnabled(false);
+		play.setEnabled(true);
 		stop.setEnabled(true);
 		load.setEnabled(true);
 		reverse.setEnabled(false);
@@ -232,7 +254,7 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 
 		JApplet applet=new JApplet();
 		applet.setLayout(new FlowLayout());        
-		
+
 		applet.add(currentTimeLabel);
 		applet.add(currentTimeSlider);
 		applet.add(totalTimeLabel);

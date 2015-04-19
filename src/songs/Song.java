@@ -115,9 +115,7 @@ speakers.
 	public void play(){
 		//what does input mean?
 		double[] input=new double[]{1.0};
-		int m=0;
-		boolean played=false;
-		int position;
+
 		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
 		//add repeatPosition ArrayList
 		for (int i=0; i<noteList.length;i++){
@@ -153,6 +151,8 @@ speakers.
 					//i>repeatPosition.get(-2)
 					//possible?
 					StdAudio.play(noteList[i], input, noteList[i].getDuration());
+					//StdAudio.play(note, input, duration);
+					//StdAudio.note(44, 2.0, 1.0);
 				}
 			}
 			else{
