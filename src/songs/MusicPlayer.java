@@ -136,6 +136,7 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 			} else if (cmd.equals("Load") ) {
 				try {
 					loadFile();
+					//the ending text might block the buttons on the right!
 				} catch (IOException ioe) {
 					System.out.println("not able to load from the file");
 				}
@@ -198,11 +199,14 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 		currentTimeSlider=new JSlider(JSlider.HORIZONTAL,0, 100,1);
 		
 		//Create the label table
+		/*
 		Hashtable labelTable = new Hashtable();
 		labelTable.put( new Integer( 0 ), new JLabel("START") );
 		//labelTable.put( new Integer( 100/10 ), new JLabel("Slow") );
 		labelTable.put( new Integer( 100 ), new JLabel("END") );
 		currentTimeSlider.setLabelTable( labelTable );
+		*/
+		
 		//currentTimeSlider.addChangeListener(arg0);
 
 		//currentTimeSlider.setPaintTicks(false);

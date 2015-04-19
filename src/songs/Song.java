@@ -87,7 +87,7 @@ public class Song {
 		//need computation
 		//not the length but also including the lasting time!! rewrite
 		//kind of like the method play? any better way?
-		double totalDuration=linesNum;
+		double totalDuration=0;
 		//get repeat note
 		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
 		for (int i=0; i<noteList.length;i++){
@@ -95,13 +95,24 @@ public class Song {
 			{
 				repeatPosition.add(i);
 			}
+			totalDuration+=noteList[i].getDuration();
 		}
 		//add length to the total duration
-		for(int j=0;j<repeatPosition.size();j++){
-			if(j%2!=0){
-				totalDuration+=repeatPosition.get(j)-repeatPosition.get(j-1)+1;
+		if(repeatPosition.size()>0){
+			for(int j=0;j<repeatPosition.size();j++){
+				if(j%2==0){
+					for(int start=repeatPosition.get(j);start<=repeatPosition.get(j+1);start++){
+						totalDuration+=noteList[start].getDuration();
+					}
+				}
+
+				/*
+				if(j%2!=0){
+					totalDuration+=repeatPosition.get(j)-repeatPosition.get(j-1)+1;
+				}*/
 			}
 		}
+
 		return totalDuration;
 	}
 	public static void main(String[] args) {
