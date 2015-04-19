@@ -22,6 +22,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
+import java.util.Hashtable;
 import java.awt.event.ActionEvent;
 
 import javax.swing.Box;
@@ -41,7 +42,7 @@ import javax.swing.SwingConstants;
 
 
 
-public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener {
+public class MusicPlayer implements  StdAudio.AudioEventListener {
 
 	// instance variables
 	private Song song;
@@ -61,6 +62,7 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 	//add buttons
 
 	private JButton play;
+	private JButton pause;
 	private JButton stop;
 	private JButton load;
 	private JButton reverse;
@@ -80,45 +82,10 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		doLayout();
 		StdAudio.addAudioEventListener(this);
 		frame.setVisible(true);
+	
 	}
 
-	/*
-	 * Called when the user interacts with graphical components, such as
-	 * clicking on a button.
-	 */
-	public void actionPerformed(ActionEvent event) {
-		String cmd = event.getActionCommand();
-		if (cmd.equals("Play")) {
-			//fill this 
-			stop.setEnabled(false);
-		} else if (cmd.equals("Pause")) {
-			StdAudio.setPaused(!StdAudio.isPaused());
-		} else if (cmd == "Stop") {
-			StdAudio.setMute(true);
-			StdAudio.setPaused(false);
-		} else if (cmd == "Load") {
-			try {
-				loadFile();
-			} catch (IOException ioe) {
-				System.out.println("not able to load from the file");
-			}
-		} else if (cmd == "Reverse") {
-			//TODO - fill this 
-			
-		} else if (cmd == "Up") {
-			//TODO - fill this
-		} else if (cmd == "Down") {
-			/*
-			//frame.add(fileChooser,BorderLayout.NORTH);
-			JFrame frame1= new JFrame();
-			frame1.setSize(100, 100);
-			frame1.setVisible(true);
-			 */
-			//TODO - fill this
-		} else if (cmd == "Change Tempo") {
-			//TODO - fill this
-		}
-	}
+
 
 	/*
 	 * Called when audio events occur in the StdAudio library. We use this to
@@ -135,18 +102,63 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 
 	public static void main(String[] args) {
 		MusicPlayer player= new MusicPlayer();
-		player.createComponents();
+		
 	}
+	
 	//can we combine all in one actionListener?
 	//or we have to create different class for each one
 	//this is an inner class that implements a listener
-	class changeListener implements ActionListener{
-		@Override
+	class clickListener implements ActionListener{
+		//actionPerformed(ActionEvent event) ;
+		/*
+		 * Called when the user interacts with graphical components, such as
+		 * clicking on a button.
+		 */
+		/*
 		public void actionPerformed(ActionEvent arg0) {
 			//what happens when you click?
 			change.setEnabled(false);
 			change.setText("success");
+		}*/
+		@Override
+		public void actionPerformed(ActionEvent event) {
+			String cmd = event.getActionCommand();
+			if (cmd.equals("Play")) {
+				//fill this 
+				play.setEnabled(false);
+				frame.setTitle("changed");
+			} else if (cmd.equals("Pause")) {
+				StdAudio.setPaused(!StdAudio.isPaused());
+			} else if (cmd.equals("Stop")) {
+				//change to .equals method instead of ==
+				StdAudio.setMute(true);
+				StdAudio.setPaused(false);
+			} else if (cmd.equals("Load") ) {
+				try {
+					loadFile();
+				} catch (IOException ioe) {
+					System.out.println("not able to load from the file");
+				}
+			} else if (cmd.equals("Reverse")) {
+				//TODO - fill this 
+				
+			} else if (cmd.equals("Up")) {
+				//TODO - fill this
+			} else if (cmd.equals("Down")) {
+
+				//TODO - fill this
+			} else if (cmd.equals("Change Tempo")) {
+				stop.setEnabled(false);
+				//TODO - fill this
+				//System.out.println("not able to load from the file");
+				System.out.println(tempoText.getText());
+			}
 		}
+		//position moved, is that okay?
+		//set cmd for every button
+		//why others could be get easily
+		//how about the text inside the feild??
+	
 
 	}
 
@@ -164,7 +176,12 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		statusLabel.setHorizontalAlignment(SwingConstants.LEFT);
 
 		change=new JButton("Change");
-		change.addActionListener(new changeListener());
+		//change.addActionListener(this.actionPerformed(event));
+		
+		//change.addActionListener(new ActionListener());
+		change.addActionListener(new clickListener());
+		change.setActionCommand("Change Tempo");
+		//System.out.println(change.getActionCommand());
 		tempoLabel=new JLabel("Tempo");
 		//set default text!
 		tempoText= new JTextField("enter your tempo. default is 1.");
@@ -177,11 +194,24 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		//Place THE CURRENT TIME
 
 		fileChooser=new JFileChooser();
+		
+		currentTimeSlider=new JSlider(JSlider.HORIZONTAL,0, 100,1);
+		
+		//Create the label table
+		Hashtable labelTable = new Hashtable();
+		labelTable.put( new Integer( 0 ), new JLabel("START") );
+		//labelTable.put( new Integer( 100/10 ), new JLabel("Slow") );
+		labelTable.put( new Integer( 100 ), new JLabel("END") );
+		currentTimeSlider.setLabelTable( labelTable );
+		//currentTimeSlider.addChangeListener(arg0);
 
-		currentTimeSlider=new JSlider();
+		//currentTimeSlider.setPaintTicks(false);
+		/*
+		 *why still show the maximum one?
 		currentTimeSlider.setMinimum(0);
 
 		currentTimeSlider.setMaximum(100);
+		*/
 		//TODO changed by the length of song!
 		currentTimeSlider.setPreferredSize(new Dimension(400,100));
 		currentTimeSlider.setOrientation(SwingConstants.HORIZONTAL);
@@ -195,18 +225,33 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		//add buttons
 		play=new JButton("Play");
 		play.setToolTipText("Click this button to play the song.");
+		play.addActionListener(new clickListener());
+
+		
+		pause=new JButton("Pause");
+		pause.setToolTipText("Click this button to stop the song.");
+		pause.addActionListener(new clickListener());
+		
 		stop=new JButton("Stop");
 		stop.setToolTipText("Click this button to stop the song.");
-		load=new JButton("Load");
-		stop.setToolTipText("Click this button to open file and load the song.");
-		reverse=new JButton("Reverse");
-		stop.setToolTipText("Click this button to play the song reversely.");
-		up=new JButton("Up");
-		stop.setToolTipText("Click this button to increase the octave by one.");
-		down=new JButton("Down");
-		stop.setToolTipText("Click this button to decrease the octave by one.");
+		stop.addActionListener(new clickListener());
 
-		//ComboBoxes 
+		load=new JButton("Load");
+		load.setToolTipText("Click this button to open file and load the song.");
+		load.addActionListener(new clickListener());
+
+		reverse=new JButton("Reverse");
+		reverse.setToolTipText("Click this button to play the song reversely.");
+		reverse.addActionListener(new clickListener());
+
+		up=new JButton("Up");
+		up.setToolTipText("Click this button to increase the octave by one.");
+		up.addActionListener(new clickListener());
+
+		down=new JButton("Down");
+		down.setToolTipText("Click this button to decrease the octave by one.");
+		down.addActionListener(new clickListener());
+
 
 		doEnabling();
 	}
@@ -224,9 +269,11 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		play.setEnabled(true);
 		stop.setEnabled(true);
 		load.setEnabled(true);
-		reverse.setEnabled(false);
+		reverse.setEnabled(true);
+		//reverse.setEnabled(false);
 		up.setEnabled(true);
 		down.setEnabled(true);
+		pause.setEnabled(true);
 		//according to the status of the song playing!
 
 	}
@@ -266,6 +313,7 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		Box box = new Box(BoxLayout.Y_AXIS);
 		frame.add(box,BorderLayout.EAST);        
 		box.add(play);
+		box.add(pause);  
 		box.add(stop);  
 		box.add(load);
 		box.add(reverse);
@@ -281,8 +329,6 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		//place in the center
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		frame.setLocation(dim.width/2-frame.getSize().width/2, dim.height/2-frame.getSize().height/2);
-		//WHEN TO SHOW THIS AND HOW?
-		//TODO frame.add(fileChooser,BorderLayout.NORTH);
 
 	}
 
@@ -374,4 +420,8 @@ public class MusicPlayer implements ActionListener, StdAudio.AudioEventListener 
 		//TODO - fill this
 		totalTimeLabel.setText(String.valueOf(song.getTotalDuration()));
 	}
+
+
+
+
 }

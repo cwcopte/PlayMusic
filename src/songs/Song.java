@@ -85,6 +85,8 @@ public class Song {
 	 */
 	public double getTotalDuration(){
 		//need computation
+		//not the length but also including the lasting time!! rewrite
+		//kind of like the method play? any better way?
 		double totalDuration=linesNum;
 		//get repeat note
 		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
