@@ -417,14 +417,15 @@ public final class StdAudio {
 	 */
 	public static void main(String[] args) {
 		// 440 Hz for 1 sec
+		/*
 		double freq = 440.0;
 		for (int i = 0; i <= StdAudio.SAMPLE_RATE; i++) {
 			StdAudio.play(0.5 * Math.sin(2 * Math.PI * freq * i / StdAudio.SAMPLE_RATE));
-		}
+		}*/
 
 		// scale increments
-		//int[] steps = { 0, 2, 4, 5, 7, 9, 11, 12 };
-		int[] steps = { 0, 2, 3, 5, 7, 8, 10, 12 };
+		int[] steps = { 0, 2, 4, 5, 7, 9, 11, 12 };
+		//int[] steps = { 0, 2, 3, 5, 7, 8, 10, 12 };
 		for (int i = 0; i < steps.length; i++) {
 			double hz = 440.0 * Math.pow(2, steps[i] / 12.0);
 			StdAudio.play(note(hz, 1.0, 0.5));

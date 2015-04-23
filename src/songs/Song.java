@@ -16,13 +16,7 @@ public class Song {
 	int linesNum ;
 	//populate your song’s array of notes by reading note data from the specified file
 	public Song(String filename){
-		//birthday.txt
-		//HeIsAPirate1.txt
-		/*
-		 * CastleInTheSky.txt
-		 * GameOfThronesTheme.txt
-		 * PopGoesTheWeasel.txt
-		 */
+
 		//read txt file and store music info
 
 		File file = new File(filename);
@@ -46,13 +40,20 @@ public class Song {
 				Pitch pitch=Pitch.valueOf(NoteInfo[1]);
 				// Pitch pitch=new Pitch(NoteInfo[1]);
 				//??correct??
-				int octave=Integer.parseInt(NoteInfo[2]);
+				if(pitch.equals(Pitch.R)){
+					boolean repeat=Boolean.parseBoolean(NoteInfo[2]);
+					collection.add(new Note(duration,  repeat)) ;
+				}
+				else{
+					int octave=Integer.parseInt(NoteInfo[2]);
 
-				Accidental accidental = Accidental.valueOf(NoteInfo[3]); // Accidental.SHARP
+					Accidental accidental = Accidental.valueOf(NoteInfo[3]); // Accidental.SHARP
 
-				boolean repeat=Boolean.parseBoolean(NoteInfo[4]);
-				//add code to catch exception???
-				collection.add(new Note(duration,pitch,octave,accidental,repeat));
+					boolean repeat=Boolean.parseBoolean(NoteInfo[4]);
+					//add code to catch exception???
+					collection.add(new Note(duration,pitch,octave,accidental,repeat));
+				}
+
 				i++;
 			}
 			//convert to array!
@@ -112,11 +113,22 @@ public class Song {
 				}*/
 			}
 		}
-
-		return totalDuration;
+//how to trim double digit?
+		
+		return Math.round(totalDuration);
 	}
 	public static void main(String[] args) {
-		Song song=new Song("birthday.txt");
+		//fail, repeat part!
+		//HeIsAPirate1.txt
+		// GameOfThronesTheme.txt
+		
+		/*success!
+		 * birthday.txt
+		 * CastleInTheSky.txt
+		 * PopGoesTheWeasel.txt
+		 */
+		
+		Song song=new Song("CastleInTheSky.txt");
 		System.out.println(song.toString());
 		//how to play the song using StdAudio?
 		song.play();
@@ -143,9 +155,10 @@ speakers.
 		for (int i=0; i<noteList.length;i++){
 			//play repeat part
 			if(repeatPosition.size()>=2){
-				do{
+				if(n<repeatPosition.size()){
 
 					if (i==repeatPosition.get(n)){
+						noteList[i].play();
 						i=repeatPosition.get(n-1);
 
 						n+=2;
@@ -155,22 +168,24 @@ speakers.
 						}
 					}
 					//need adjustment here!
-					StdAudio.play(noteList[i], input, noteList[i].getDuration());
-
+					//StdAudio.play(noteList[i], input, noteList[i].getDuration());
+					noteList[i].play();
 				}
-				while(n<repeatPosition.size());
+				
 				//play the rest no more repeat part
 				if(i>repeatPosition.get(repeatPosition.size()-2)&&flag){
 					//i>repeatPosition.get(-2)
 					//possible?
-					StdAudio.play(noteList[i], input, noteList[i].getDuration());
+					noteList[i].play();
+					//StdAudio.play(noteList[i], input, noteList[i].getDuration());
 					//StdAudio.play(note, input, duration);
 					//StdAudio.note(44, 2.0, 1.0);
 				}
 			}
 			else{
 				//for the case that there is no repeat part inside song
-				StdAudio.play(noteList[i], input, noteList[i].getDuration());
+				//StdAudio.play(noteList[i], input, noteList[i].getDuration());
+				noteList[i].play();
 			}
 		}
 
