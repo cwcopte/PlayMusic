@@ -21,7 +21,7 @@ public class Song {
 		//read txt file and store music info
 
 		File file = new File(filename);
-		//ArrayList<Note> collection = new ArrayList<Note>();
+
 		try {
 			FileReader fileReader = new FileReader(file);
 			BufferedReader reader = new BufferedReader(fileReader);
@@ -32,19 +32,16 @@ public class Song {
 			int i=0;
 			while (i<linesNum) {
 				String line = reader.readLine();
-				//System.out.println(line.toString());
+
 				if (line == null) break;
 				line = line.trim();
 				if (line.equals("")) continue; // ignore possible blank lines
 				String[] NoteInfo = line.split(" ");
-				// Note(double duration, Pitch pitch, int octave, Accidental accidental, boolean repeat) 
 				double duration=Double.parseDouble(NoteInfo[0]);
 				Pitch pitch=Pitch.valueOf(NoteInfo[1]);
-				// Pitch pitch=new Pitch(NoteInfo[1]);
-				//??correct??
+
 				if(pitch.equals(Pitch.R)){
 					boolean repeat=Boolean.parseBoolean(NoteInfo[2]);
-					//collection.add(new Note(duration,  repeat)) ;
 					noteList[i]=new Note(duration,  repeat);
 				}
 				else{
@@ -53,20 +50,17 @@ public class Song {
 					Accidental accidental = Accidental.valueOf(NoteInfo[3]); // Accidental.SHARP
 
 					boolean repeat=Boolean.parseBoolean(NoteInfo[4]);
-					//add code to catch exception???
 					noteList[i]=new Note(duration,pitch,octave,accidental,repeat);
-					//collection.add(new Note(duration,pitch,octave,accidental,repeat));
 				}
 
 				i++;
 			}
-			//convert to array!
-			//noteList = collection.toArray(new Note[collection.size()]);
+
 		}
 		catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-		// Note(double duration, Pitch pitch, int octave, Accidental accidental, boolean repeat) 
+
 	}
 	/**
 	 * Returns the title of the song
@@ -89,9 +83,6 @@ public class Song {
 	 * @return
 	 */
 	public double getTotalDuration(){
-		//need computation
-		//not the length but also including the lasting time!! rewrite
-		//kind of like the method play? any better way?
 		double totalDuration=0;
 		//get repeat note
 		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
@@ -112,8 +103,6 @@ public class Song {
 				}
 			}
 		}
-//how to trim double digit?
-		//return Math.round(totalDuration);
 		return totalDuration;
 	}
 	/**
@@ -121,10 +110,8 @@ public class Song {
 speakers.
 	 */
 	public void play(){
-		//what does input mean?
-		double[] input=new double[]{1.0};
 		playedNotes=new ArrayList<Note>();
-		
+
 		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
 		//add repeatPosition ArrayList
 		for (int i=0; i<noteList.length;i++){
@@ -155,7 +142,7 @@ speakers.
 					noteList[i].play();
 					playedNotes.add(noteList[i]);
 				}
-				
+
 				//play the rest no more repeat part
 				if(i>repeatPosition.get(repeatPosition.size()-2)&&flag){
 					noteList[i].play();
@@ -195,7 +182,7 @@ nothing. In such a case, no notes are changed
 		for (int i=0; i<noteList.length;i++){
 			presentOctave=noteList[i].getOctave();
 			//how to catch exception inside note class?
-				noteList[i].setOctave(presentOctave-1);
+			noteList[i].setOctave(presentOctave-1);
 
 		}
 		return true;
@@ -217,7 +204,7 @@ nothing. In such a case, no notes are changed
 		for (int i=0; i<noteList.length;i++){
 			presentOctave=noteList[i].getOctave();
 			//how to catch exception inside note class?
-				noteList[i].setOctave(presentOctave+1);
+			noteList[i].setOctave(presentOctave+1);
 
 		}
 		return true;
