@@ -14,19 +14,21 @@ public class Song {
 	String artist ;
 	Note[] noteList;
 	int linesNum ;
+	ArrayList<Note> playedNotes;
 	//populate your song’s array of notes by reading note data from the specified file
 	public Song(String filename){
 
 		//read txt file and store music info
 
 		File file = new File(filename);
-		ArrayList<Note> collection = new ArrayList<Note>();
+		//ArrayList<Note> collection = new ArrayList<Note>();
 		try {
 			FileReader fileReader = new FileReader(file);
 			BufferedReader reader = new BufferedReader(fileReader);
 			title = reader.readLine().trim();
 			artist = reader.readLine().trim();
 			linesNum =Integer.parseInt( reader.readLine().trim());
+			noteList=new Note[linesNum];
 			int i=0;
 			while (i<linesNum) {
 				String line = reader.readLine();
@@ -42,7 +44,8 @@ public class Song {
 				//??correct??
 				if(pitch.equals(Pitch.R)){
 					boolean repeat=Boolean.parseBoolean(NoteInfo[2]);
-					collection.add(new Note(duration,  repeat)) ;
+					//collection.add(new Note(duration,  repeat)) ;
+					noteList[i]=new Note(duration,  repeat);
 				}
 				else{
 					int octave=Integer.parseInt(NoteInfo[2]);
@@ -51,13 +54,14 @@ public class Song {
 
 					boolean repeat=Boolean.parseBoolean(NoteInfo[4]);
 					//add code to catch exception???
-					collection.add(new Note(duration,pitch,octave,accidental,repeat));
+					noteList[i]=new Note(duration,pitch,octave,accidental,repeat);
+					//collection.add(new Note(duration,pitch,octave,accidental,repeat));
 				}
 
 				i++;
 			}
 			//convert to array!
-			noteList = collection.toArray(new Note[collection.size()]);
+			//noteList = collection.toArray(new Note[collection.size()]);
 		}
 		catch (IOException e) {
 			System.out.println(e.getMessage());
@@ -106,32 +110,11 @@ public class Song {
 						totalDuration+=noteList[start].getDuration();
 					}
 				}
-
-				/*
-				if(j%2!=0){
-					totalDuration+=repeatPosition.get(j)-repeatPosition.get(j-1)+1;
-				}*/
 			}
 		}
 //how to trim double digit?
-		
-		return Math.round(totalDuration);
-	}
-	public static void main(String[] args) {
-		//fail, repeat part!
-		//HeIsAPirate1.txt
-		// GameOfThronesTheme.txt
-		
-		/*success!
-		 * birthday.txt
-		 * CastleInTheSky.txt
-		 * PopGoesTheWeasel.txt
-		 */
-		
-		Song song=new Song("CastleInTheSky.txt");
-		System.out.println(song.toString());
-		//how to play the song using StdAudio?
-		song.play();
+		//return Math.round(totalDuration);
+		return totalDuration;
 	}
 	/**
 	 * play your song so that it can be heard on the computer’s
@@ -140,7 +123,8 @@ speakers.
 	public void play(){
 		//what does input mean?
 		double[] input=new double[]{1.0};
-
+		playedNotes=new ArrayList<Note>();
+		
 		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
 		//add repeatPosition ArrayList
 		for (int i=0; i<noteList.length;i++){
@@ -159,6 +143,7 @@ speakers.
 
 					if (i==repeatPosition.get(n)){
 						noteList[i].play();
+						playedNotes.add(noteList[i]);
 						i=repeatPosition.get(n-1);
 
 						n+=2;
@@ -167,30 +152,23 @@ speakers.
 							flag=true;
 						}
 					}
-					//need adjustment here!
-					//StdAudio.play(noteList[i], input, noteList[i].getDuration());
 					noteList[i].play();
+					playedNotes.add(noteList[i]);
 				}
 				
 				//play the rest no more repeat part
 				if(i>repeatPosition.get(repeatPosition.size()-2)&&flag){
-					//i>repeatPosition.get(-2)
-					//possible?
 					noteList[i].play();
-					//StdAudio.play(noteList[i], input, noteList[i].getDuration());
-					//StdAudio.play(note, input, duration);
-					//StdAudio.note(44, 2.0, 1.0);
+					playedNotes.add(noteList[i]);
+
 				}
 			}
 			else{
 				//for the case that there is no repeat part inside song
-				//StdAudio.play(noteList[i], input, noteList[i].getDuration());
 				noteList[i].play();
+				//playedNotes.add(noteList[i]);
 			}
 		}
-
-		//play(Note note, double[] input, double duration)
-		//play(Note note, double[] input, double duration
 
 	}
 	/**
