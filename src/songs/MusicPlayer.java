@@ -77,6 +77,7 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 	private JLabel statusSong;
 	private JLabel changeResult;
 	private boolean reversed;
+	private boolean isPause;
 
 	private HashMap<String, Double> changeInfo;
 	/*
@@ -84,6 +85,7 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 	 */
 	public MusicPlayer() {
 		reversed=false;
+		isPause=false;
 		//intial song
 		song = null;
 		//song = new Song("HeIsAPirate1.txt");
@@ -180,22 +182,23 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 
 			String cmd = event.getActionCommand();
 			if (cmd.equals("Play")) {
+
 				if(song!=null){
-					play.setEnabled(false);
-					pause.setEnabled(true);
-					stop.setEnabled(true);
-					change.setEnabled(false);
-					tempoText.setEnabled(false);
+					if(isPause){
+						StdAudio.setPaused(!StdAudio.isPaused());
+					}else{
+						playSong();
+					}
+					isPause=false;
+					doEnabling();
 				}
 
-				playSong();
+				
 				//this.playSong();
 				//doEnabling();
 			} else if (cmd.equals("Pause")) {
-				//play.setEnabled(true);
-				//pause.setEnabled(false);
-				 
-				
+				isPause=true;
+				doEnabling();
 				StdAudio.setPaused(!StdAudio.isPaused());
 
 				//doEnabling();
@@ -380,6 +383,18 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 			down.setEnabled(false);
 			pause.setEnabled(true);
 			//according to the status of the song playing!
+			//check if pause
+			if(!isPause){
+				play.setEnabled(false);
+				pause.setEnabled(true);
+				stop.setEnabled(true);
+				change.setEnabled(false);
+				tempoText.setEnabled(false);
+			}else{
+				play.setEnabled(true);
+				pause.setEnabled(false);
+				isPause=true;
+			}
 		}else{
 			play.setEnabled(true);
 			stop.setEnabled(false);
@@ -389,6 +404,7 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 			down.setEnabled(true);
 			pause.setEnabled(false);
 		}
+
 
 
 	}
@@ -416,16 +432,17 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 		frame.add(box2,BorderLayout.SOUTH);
 
 		//CREATE MORE LAYOUT
-
+		Box boxTime = new Box(BoxLayout.Y_AXIS);
 		JApplet applet=new JApplet();
 		applet.setLayout(new FlowLayout());        
 
 		applet.add(currentTimeLabel);
-		applet.add(currentTimeSlider);
 		applet.add(totalTimeLabel);
+		boxTime.add(applet);
+		
+		boxTime.add(currentTimeSlider);
 
-
-		frame.add(applet, BorderLayout.WEST);
+		frame.add(boxTime, BorderLayout.WEST);
 
 		//CREATE MORE LAYOUT
 		Box box = new Box(BoxLayout.Y_AXIS);
