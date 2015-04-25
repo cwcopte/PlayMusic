@@ -15,7 +15,7 @@ public class Song {
 	Note[] noteList;
 	int linesNum ;
 	ArrayList<Note> playedNotes;
-	//populate your song’s array of notes by reading note data from the specified file
+	//populate your songâ€™s array of notes by reading note data from the specified file
 	public Song(String filename){
 
 		//read txt file and store music info
@@ -106,7 +106,7 @@ public class Song {
 		return totalDuration;
 	}
 	/**
-	 * play your song so that it can be heard on the computer’s
+	 * play your song so that it can be heard on the computerâ€™s
 speakers.
 	 */
 	public void play(){
@@ -153,7 +153,7 @@ speakers.
 			else{
 				//for the case that there is no repeat part inside song
 				noteList[i].play();
-				//playedNotes.add(noteList[i]);
+				playedNotes.add(noteList[i]);
 			}
 		}
 
