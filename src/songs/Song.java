@@ -21,7 +21,7 @@ public class Song {
 		//read txt file and store music info
 
 		File file = new File(filename);
-
+		//ArrayList<Note> collection = new ArrayList<Note>();
 		try {
 			FileReader fileReader = new FileReader(file);
 			BufferedReader reader = new BufferedReader(fileReader);
@@ -32,16 +32,19 @@ public class Song {
 			int i=0;
 			while (i<linesNum) {
 				String line = reader.readLine();
-
+				//System.out.println(line.toString());
 				if (line == null) break;
 				line = line.trim();
 				if (line.equals("")) continue; // ignore possible blank lines
 				String[] NoteInfo = line.split(" ");
+				// Note(double duration, Pitch pitch, int octave, Accidental accidental, boolean repeat) 
 				double duration=Double.parseDouble(NoteInfo[0]);
 				Pitch pitch=Pitch.valueOf(NoteInfo[1]);
-
+				// Pitch pitch=new Pitch(NoteInfo[1]);
+				//??correct??
 				if(pitch.equals(Pitch.R)){
 					boolean repeat=Boolean.parseBoolean(NoteInfo[2]);
+					//collection.add(new Note(duration,  repeat)) ;
 					noteList[i]=new Note(duration,  repeat);
 				}
 				else{
@@ -50,17 +53,20 @@ public class Song {
 					Accidental accidental = Accidental.valueOf(NoteInfo[3]); // Accidental.SHARP
 
 					boolean repeat=Boolean.parseBoolean(NoteInfo[4]);
+					//add code to catch exception???
 					noteList[i]=new Note(duration,pitch,octave,accidental,repeat);
+					//collection.add(new Note(duration,pitch,octave,accidental,repeat));
 				}
 
 				i++;
 			}
-
+			//convert to array!
+			//noteList = collection.toArray(new Note[collection.size()]);
 		}
 		catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-
+		// Note(double duration, Pitch pitch, int octave, Accidental accidental, boolean repeat) 
 	}
 	/**
 	 * Returns the title of the song
@@ -83,6 +89,9 @@ public class Song {
 	 * @return
 	 */
 	public double getTotalDuration(){
+		//need computation
+		//not the length but also including the lasting time!! rewrite
+		//kind of like the method play? any better way?
 		double totalDuration=0;
 		//get repeat note
 		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
@@ -103,67 +112,18 @@ public class Song {
 				}
 			}
 		}
+//how to trim double digit?
+		//return Math.round(totalDuration);
 		return totalDuration;
 	}
 	/**
 	 * play your song so that it can be heard on the computer’s
 speakers.
 	 */
-	/*public void play(){
-		playedNotes=new ArrayList<Note>();
-
-		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
-		//add repeatPosition ArrayList
-		for (int i=0; i<noteList.length;i++){
-			if(noteList[i].isRepeat()){
-
-				repeatPosition.add(i);
-			}
-		}
-		//play
-		int n=1;
-		boolean flag=false;
-		for (int i=0; i<noteList.length;i++){
-			//play repeat part
-			if(repeatPosition.size()>=2){
-				if(n<repeatPosition.size()){
-
-					if (i==repeatPosition.get(n)){
-						noteList[i].play();
-						playedNotes.add(noteList[i]);
-						i=repeatPosition.get(n-1);
-
-						n+=2;
-						if(n>repeatPosition.size()){
-							//whether already reach the end of repeat part
-							flag=true;
-						}
-					}
-					noteList[i].play();
-					playedNotes.add(noteList[i]);
-				}
-
-				//play the rest no more repeat part
-				if(i>repeatPosition.get(repeatPosition.size()-2)&&flag){
-					noteList[i].play();
-					playedNotes.add(noteList[i]);
-
-				}
-			}
-			else{
-				//for the case that there is no repeat part inside song
-				noteList[i].play();
-				playedNotes.add(noteList[i]);
-			}
-		}
-
-	}*/
-	
 	public void play(){
 		
 		playedNotes = new ArrayList<Note>();
 		ArrayList<Integer> repeatPosition = new ArrayList<Integer> ();
-		int repeatLen = 0;
 		int c = 0;
 		
 		for (int i = 0; i < noteList.length; i++) {
@@ -172,32 +132,29 @@ speakers.
 			}
 		}
 		
-		for (int i = 0; i < repeatPosition.size() - 1; i++) {
-			if (i%2 == 0) {
-			repeatLen = repeatPosition.get(i+1) - repeatPosition.get(i) + 1;
-			}
-		}
-
-                for (int i = 0; i < noteList.length; i++) {
-        	       if (!noteList[i].isRepeat()) {
-        		       playedNotes.add(noteList[i]);
-        	       }
-        	       else {
+        for (int i = 0; i < noteList.length; i++) {
+        	if (!noteList[i].isRepeat()) {
+        		playedNotes.add(noteList[i]);
+        	}
+        	else {
         		
-        		      for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
-        			      playedNotes.add(noteList[j]);
-        		      }
-        		      for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
-        			      playedNotes.add(noteList[j]);
-        		      }
-        		      i += repeatPosition.get(c+1) - repeatPosition.get(c);
-        		      c += 2;
-        	        }
-                }
-                for (int k = 0; k < playedNotes.size(); k++) {
-        	       playedNotes.get(k).play();
-                }
+        		for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
+        			playedNotes.add(noteList[j]);
+        		}
+        		for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
+        			playedNotes.add(noteList[j]);
+        		}
+        		i += repeatPosition.get(c+1) - repeatPosition.get(c);
+        		c += 2;
+        	}
+        }
+        for (int k = 0; k < playedNotes.size(); k++) {
+        	playedNotes.get(k).play();
+        }
 	}
+		
+		
+
 	/**
 	 * modify the state of the notes in your internal array so that
 they are all exactly 1 octave lower in pitch than their current state.
@@ -222,7 +179,7 @@ nothing. In such a case, no notes are changed
 		for (int i=0; i<noteList.length;i++){
 			presentOctave=noteList[i].getOctave();
 			//how to catch exception inside note class?
-			noteList[i].setOctave(presentOctave-1);
+				noteList[i].setOctave(presentOctave-1);
 
 		}
 		return true;
@@ -244,7 +201,7 @@ nothing. In such a case, no notes are changed
 		for (int i=0; i<noteList.length;i++){
 			presentOctave=noteList[i].getOctave();
 			//how to catch exception inside note class?
-			noteList[i].setOctave(presentOctave+1);
+				noteList[i].setOctave(presentOctave+1);
 
 		}
 		return true;
@@ -283,7 +240,7 @@ Arrays.toString returns a string representation of an array.
 			result+=noteList[i].toString()+"\n";
 		}
 		//necessary?
-		System.out.println(Arrays.toString(noteList));
+		//System.out.println(Arrays.toString(noteList));
 		return result;
 	}
 }
