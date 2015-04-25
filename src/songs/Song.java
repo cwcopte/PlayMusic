@@ -109,7 +109,7 @@ public class Song {
 	 * play your song so that it can be heard on the computer’s
 speakers.
 	 */
-	public void play(){
+	/*public void play(){
 		playedNotes=new ArrayList<Note>();
 
 		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
@@ -157,6 +157,46 @@ speakers.
 			}
 		}
 
+	}*/
+	
+	public void play(){
+		
+		playedNotes = new ArrayList<Note>();
+		ArrayList<Integer> repeatPosition = new ArrayList<Integer> ();
+		int repeatLen = 0;
+		int c = 0;
+		
+		for (int i = 0; i < noteList.length; i++) {
+			if (noteList[i].isRepeat()) {
+				repeatPosition.add(i);
+			}
+		}
+		
+		for (int i = 0; i < repeatPosition.size() - 1; i++) {
+			if (i%2 == 0) {
+			repeatLen = repeatPosition.get(i+1) - repeatPosition.get(i) + 1;
+			}
+		}
+
+        for (int i = 0; i < noteList.length; i++) {
+        	if (!noteList[i].isRepeat()) {
+        		playedNotes.add(noteList[i]);
+        	}
+        	else {
+        		
+        		for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
+        			playedNotes.add(noteList[j]);
+        		}
+        		for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
+        			playedNotes.add(noteList[j]);
+        		}
+        		i += repeatPosition.get(c+1) - repeatPosition.get(c);
+        		c += 2;
+        	}
+        }
+        for (int k = 0; k < playedNotes.size(); k++) {
+        	playedNotes.get(k).play();
+            }
 	}
 	/**
 	 * modify the state of the notes in your internal array so that
