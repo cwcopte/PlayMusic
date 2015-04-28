@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 
 public class Song {
-	String title ;
-	String artist ;
-	Note[] noteList;
-	int linesNum ;
-	ArrayList<Note> playedNotes;
+	private String title ;
+	private String artist ;
+	private Note[] noteList;
+	private int linesNum ;
+	private ArrayList<Note> playedNotes;
 	//populate your song’s array of notes by reading note data from the specified file
 	public Song(String filename){
 
@@ -215,6 +215,11 @@ nothing. In such a case, no notes are changed
 			noteList[noteList.length-i-1]=tempNote;
 		}
 	}
+	 
+	public Note[] getNoteList() {
+		return noteList;
+	}
+
 	/**
 	 * for debugging and for the purposes of also being able to write some kind of unit test. 
 Arrays.toString returns a string representation of an array.
