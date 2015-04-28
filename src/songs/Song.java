@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 
 public class Song {
-	private String title ;
-	private String artist ;
-	private Note[] noteList;
-	private int linesNum ;
-	private ArrayList<Note> playedNotes;
+	String title ;
+	String artist ;
+	Note[] noteList;
+	int linesNum ;
+	ArrayList<Note> playedNotes;
 	//populate your song’s array of notes by reading note data from the specified file
 	public Song(String filename){
 
@@ -78,7 +78,7 @@ public class Song {
 	}
 	/**
 	 * 	Returns the artist.
-	 * @return artist
+	 * @return
 	 */
 	public String getArtist(){
 		return artist;
@@ -86,42 +86,11 @@ public class Song {
 	/**
 	 * return the total duration (length) of the song, in seconds
 	 * including repeat part!
-	 * @return total duration
+	 * @return
 	 */
 	public double getTotalDuration(){
-		//need computation
-		//not the length but also including the lasting time!! rewrite
-		//kind of like the method play? any better way?
-		double totalDuration=0;
-		//get repeat note
-		ArrayList<Integer> repeatPosition=new ArrayList<Integer> ();
-		for (int i=0; i<noteList.length;i++){
-			if(noteList[i].isRepeat())
-			{
-				repeatPosition.add(i);
-			}
-			totalDuration+=noteList[i].getDuration();
-		}
-		//add length to the total duration
-		if(repeatPosition.size()>0){
-			for(int j=0;j<repeatPosition.size();j++){
-				if(j%2==0){
-					for(int start=repeatPosition.get(j);start<=repeatPosition.get(j+1);start++){
-						totalDuration+=noteList[start].getDuration();
-					}
-				}
-			}
-		}
-//how to trim double digit?
-		//return Math.round(totalDuration);
-		return totalDuration;
-	}
-	/**
-	 * play your song so that it can be heard on the computer’s
-speakers.
-	 */
-	public void play(){
 		
+		double totalDuration = 0;
 		playedNotes = new ArrayList<Note>();
 		ArrayList<Integer> repeatPosition = new ArrayList<Integer> ();
 		int c = 0;
@@ -138,19 +107,37 @@ speakers.
         	}
         	else {
         		
+        		// double writing the repeated line
         		for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
         			playedNotes.add(noteList[j]);
         		}
         		for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
         			playedNotes.add(noteList[j]);
         		}
+        		// override the pointer across repeated section in the original noteList
         		i += repeatPosition.get(c+1) - repeatPosition.get(c);
+        		// move the pointer of the repeated position to the next one the the repeatPosition
         		c += 2;
         	}
         }
+        
+        for (int k = 0; k < playedNotes.size(); k++) {
+        	totalDuration += playedNotes.get(k).getDuration();
+        } 
+        return totalDuration;
+	}
+	/**
+	 * play your song so that it can be heard on the computer’s
+speakers.
+	 */
+	public void play(){
+		
+		// set up the playedNotes first in case the duration method is not called before play
+		getTotalDuration();
         for (int k = 0; k < playedNotes.size(); k++) {
         	playedNotes.get(k).play();
         }
+        
 	}
 		
 		
@@ -186,7 +173,7 @@ nothing. In such a case, no notes are changed
 	}
 	/**
 	 * raises the octave by 1.  special case. We do not allow octaves above 10.
-	 * @return if it is increased
+	 * @return
 	 */
 	public boolean octaveUp(){
 		boolean edgeCase=false;
