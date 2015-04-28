@@ -166,8 +166,9 @@ nothing. In such a case, no notes are changed
 		for (int i=0; i<noteList.length;i++){
 			presentOctave=noteList[i].getOctave();
 			//how to catch exception inside note class?
+			if(!noteList[i].isRest()){
 				noteList[i].setOctave(presentOctave-1);
-
+			}
 		}
 		return true;
 	}

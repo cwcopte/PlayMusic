@@ -360,6 +360,8 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 			up.setEnabled(true);
 			down.setEnabled(true);
 			pause.setEnabled(false);
+			tempoText.setEnabled(true);
+			change.setEnabled(true);
 		}
 
 
