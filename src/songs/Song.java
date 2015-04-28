@@ -10,11 +10,11 @@ import java.util.Arrays;
 
 
 public class Song {
-	String title ;
-	String artist ;
-	Note[] noteList;
-	int linesNum ;
-	ArrayList<Note> playedNotes;
+	private String title ;
+	private String artist ;
+	private Note[] noteList;
+	private int linesNum ;
+	private ArrayList<Note> playedNotes;
 	//populate your song’s array of notes by reading note data from the specified file
 	public Song(String filename){
 
@@ -78,7 +78,7 @@ public class Song {
 	}
 	/**
 	 * 	Returns the artist.
-	 * @return
+	 * @return artist
 	 */
 	public String getArtist(){
 		return artist;
@@ -86,7 +86,7 @@ public class Song {
 	/**
 	 * return the total duration (length) of the song, in seconds
 	 * including repeat part!
-	 * @return
+	 * @return total duration
 	 */
 	public double getTotalDuration(){
 		//need computation
@@ -186,7 +186,7 @@ nothing. In such a case, no notes are changed
 	}
 	/**
 	 * raises the octave by 1.  special case. We do not allow octaves above 10.
-	 * @return
+	 * @return if it is increased
 	 */
 	public boolean octaveUp(){
 		boolean edgeCase=false;

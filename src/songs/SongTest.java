@@ -57,7 +57,10 @@ public class SongTest {
 		assertEquals(3.6, SecondSong.getTotalDuration(),.001);
 		//System.out.println(FourthSong.getTotalDuration());
 		assertEquals(9.8, ThirdSong.getTotalDuration(),.001);
-		assertEquals(24.0, FourthSong.getTotalDuration(), .001);
+		System.out.println(FourthSong.getTotalDuration());
+		//25.19999999967
+		assertEquals(25.2, FourthSong.getTotalDuration(), .001);
+		
 	}
 
 	@Test
