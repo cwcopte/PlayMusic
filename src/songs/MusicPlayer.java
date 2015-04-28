@@ -113,12 +113,12 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 			play.setEnabled(true);
 		}
 	}
-/**
- * update the song status showing in the UI side
- * @param up if user click the button 'up'
- * @param changeReverse if the user click the 'reverse'
- * @param reverse if the song is in reverse status or not
- */
+	/**
+	 * update the song status showing in the UI side
+	 * @param up if user click the button 'up'
+	 * @param changeReverse if the user click the 'reverse'
+	 * @param reverse if the song is in reverse status or not
+	 */
 	public void updateSong(boolean up, boolean changeReverse, boolean reverse){
 
 		String text="";
@@ -148,7 +148,7 @@ public class MusicPlayer implements  StdAudio.AudioEventListener {
 
 		statusSong.setText(text);
 	}
-	
+
 	/**
 	 * update song status when user input number to change the ratio
 	 * @param ratio the ratio entered

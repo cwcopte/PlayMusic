@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class SongTest {
-    
+
 	private Song FirstSong;
 	private Song SecondSong;
 	private Song ThirdSong;
@@ -22,7 +22,7 @@ public class SongTest {
 	private Note[] testNote2;
 	private Note[] testNote3;
 	private Note[] testNote4;
-	
+
 	@Before
 	public void setUp() throws Exception {
 		FirstSong = new Song("birthday.txt");
@@ -34,7 +34,7 @@ public class SongTest {
 		EighthSong = new Song("birthday1.txt");
 		NinethSong = new Song("PopGoesTheWeasel2.txt");
 		flag = true;
-		
+
 	}
 
 
@@ -67,7 +67,7 @@ public class SongTest {
 
 	@Test
 	public void testPlay() {
-		
+
 		// test first song, which does not have reaptead section
 		FirstSong.play();
 		//System.out.println(FirstSong.playedNotes.toString());
@@ -75,9 +75,9 @@ public class SongTest {
 			if (!FirstSong.getNoteList()[i].toString().equals(FirstSong.getPlayedNotes().get(i).toString())) {
 				flag = false;
 			}
-		assertTrue(flag);
+			assertTrue(flag);
 		}
-		
+
 		// test the second song, which has one repeated section
 		SecondSong.play();
 		//System.out.print(SecondSong.playedNotes.toString());
@@ -92,14 +92,14 @@ public class SongTest {
 				flag = false;
 			}
 		}
-		
+
 		// test the third song, which do not have reapted section
 		ThirdSong.play();
 		for(int i = 0; i < 25; i++) {
 			if (!ThirdSong.getNoteList()[i].toString().equals(ThirdSong.getPlayedNotes().get(i).toString())) {
 				flag = false;
 			}
-		assertTrue(flag);
+			assertTrue(flag);
 		}
 		FourthSong.play();
 	}
@@ -110,22 +110,22 @@ public class SongTest {
 		assertTrue(FirstSong.octaveDown());
 		assertTrue(FirstSong.octaveDown());
 		assertFalse(FirstSong.octaveDown());
-		
+
 		assertTrue(SecondSong.octaveDown());
 		assertTrue(SecondSong.octaveDown());
 		assertTrue(SecondSong.octaveDown());
 		assertFalse(SecondSong.octaveDown());
-		
+
 		assertTrue(ThirdSong.octaveDown());
 		assertTrue(ThirdSong.octaveDown());
 		assertTrue(ThirdSong.octaveDown());
 		assertFalse(ThirdSong.octaveDown());
-		
+
 		assertTrue(FourthSong.octaveDown());
 		assertTrue(FourthSong.octaveDown());
 		assertTrue(FourthSong.octaveDown());
 		assertFalse(FourthSong.octaveDown());
-		
+
 		assertFalse(FifthSong.octaveDown());
 	}
 
@@ -137,27 +137,27 @@ public class SongTest {
 		assertTrue(FirstSong.octaveUp());
 		assertTrue(FirstSong.octaveUp());
 		assertFalse(FirstSong.octaveUp());
-		
+
 		assertTrue(SecondSong.octaveUp());
 		assertTrue(SecondSong.octaveUp());
 		assertTrue(SecondSong.octaveUp());
 		assertTrue(SecondSong.octaveUp());
 		assertTrue(SecondSong.octaveUp());
 		assertFalse(SecondSong.octaveUp());
-		
+
 		assertTrue(ThirdSong.octaveUp());
 		assertTrue(ThirdSong.octaveUp());
 		assertTrue(ThirdSong.octaveUp());
 		assertTrue(ThirdSong.octaveUp());
 		assertTrue(ThirdSong.octaveUp());
 		assertFalse(ThirdSong.octaveUp());
-		
+
 		assertTrue(FourthSong.octaveUp());
 		assertTrue(FourthSong.octaveUp());
 		assertTrue(FourthSong.octaveUp());
 		assertTrue(FourthSong.octaveUp());
 		assertFalse(FourthSong.octaveUp());
-		
+
 		assertFalse(SixthSong.octaveUp());
 	}
 
@@ -176,41 +176,41 @@ public class SongTest {
 	@Test
 	public void testReverse() {
 		int length1 = FirstSong.getNoteList().length;
-        Note[] testNote = new Note[length1];
-        for (int i = 0; i < length1; i ++) {
-        	testNote[i] = FirstSong.getNoteList()[length1 - i - 1];
-        }
-        FirstSong.reverse();
-        assertTrue(Arrays.toString(FirstSong.getNoteList()).equals(Arrays.toString(testNote)));
-        
-        int length2 = SecondSong.getNoteList().length;
-        Note[] testNote2 = new Note[length2];
-        for (int i = 0; i < length2; i ++) {
-        	testNote2[i] = SecondSong.getNoteList()[length2 - i - 1];
-        }
-        SecondSong.reverse();
-        assertTrue(Arrays.toString(SecondSong.getNoteList()).equals(Arrays.toString(testNote2)));
-		
-        int length3 = ThirdSong.getNoteList().length;
-        Note[] testNote3 = new Note[length3];
-        for (int i = 0; i < length3; i ++) {
-        	testNote3[i] = ThirdSong.getNoteList()[length3 - i - 1];
-        }
-        ThirdSong.reverse();
-        assertTrue(Arrays.toString(ThirdSong.getNoteList()).equals(Arrays.toString(testNote3)));
-        
-        int length4 = FourthSong.getNoteList().length;
-        Note[] testNote4 = new Note[length4];
-        for (int i = 0; i < length4; i ++) {
-        	testNote4[i] = FourthSong.getNoteList()[length4 - i - 1];
-        }
-        FourthSong.reverse();
-        assertTrue(Arrays.toString(FourthSong.getNoteList()).equals(Arrays.toString(testNote4)));
+		Note[] testNote = new Note[length1];
+		for (int i = 0; i < length1; i ++) {
+			testNote[i] = FirstSong.getNoteList()[length1 - i - 1];
+		}
+		FirstSong.reverse();
+		assertTrue(Arrays.toString(FirstSong.getNoteList()).equals(Arrays.toString(testNote)));
+
+		int length2 = SecondSong.getNoteList().length;
+		Note[] testNote2 = new Note[length2];
+		for (int i = 0; i < length2; i ++) {
+			testNote2[i] = SecondSong.getNoteList()[length2 - i - 1];
+		}
+		SecondSong.reverse();
+		assertTrue(Arrays.toString(SecondSong.getNoteList()).equals(Arrays.toString(testNote2)));
+
+		int length3 = ThirdSong.getNoteList().length;
+		Note[] testNote3 = new Note[length3];
+		for (int i = 0; i < length3; i ++) {
+			testNote3[i] = ThirdSong.getNoteList()[length3 - i - 1];
+		}
+		ThirdSong.reverse();
+		assertTrue(Arrays.toString(ThirdSong.getNoteList()).equals(Arrays.toString(testNote3)));
+
+		int length4 = FourthSong.getNoteList().length;
+		Note[] testNote4 = new Note[length4];
+		for (int i = 0; i < length4; i ++) {
+			testNote4[i] = FourthSong.getNoteList()[length4 - i - 1];
+		}
+		FourthSong.reverse();
+		assertTrue(Arrays.toString(FourthSong.getNoteList()).equals(Arrays.toString(testNote4)));
 	}
 
 	@Test
 	public void testToString() {
-		
+
 		assertEquals("something\nsomeone\n2.0\n0.25 D 4 NATURAL false\n0.25 D 4 NATURAL false\n0.5 E 4 NATURAL false\n"
 				+ "0.5 D 4 NATURAL false\n0.5 G 4 NATURAL false\n", EighthSong.toString());
 		assertEquals("Pop Goes the Weasel\nUnknown\n1.8\n0.2 C 4 NATURAL false\n0.4 F 4 NATURAL false\n0.2 F 4 NATURAL false\n0.4 G 4 NATURAL false\n"

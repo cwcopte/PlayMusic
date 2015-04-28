@@ -24,12 +24,12 @@ public class Note {
 	 * Constant for the maximum legal value that an octave can have.
 	 */
 	public static final int OCTAVE_MAX = 10;
-	
+
 	/*
 	 * Whether this class should print messages to the console for debugging.
 	 */
 	public static boolean DEBUG = true;
-	
+
 	// fields
 	private double duration;         // note's duration in seconds
 	private Pitch pitch;             // note's pitch from A-G or R for rest
@@ -69,7 +69,7 @@ public class Note {
 	public Note(double duration, boolean repeat) {
 		this(duration, Pitch.R, OCTAVE_MIN + 1, Accidental.NATURAL, repeat);
 	}
-	
+
 	/**
 	 * Returns true if o refers to a Note object with the same state
 	 * as this Note object; otherwise false.
@@ -97,7 +97,7 @@ public class Note {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Returns this Note's accidental value of SHARP, FLAT, or NATURAL.
 	 * The accidental value is meaningless for a rest; this method will

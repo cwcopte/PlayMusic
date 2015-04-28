@@ -89,58 +89,58 @@ public class Song {
 	 * @return
 	 */
 	public double getTotalDuration(){
-		
+
 		double totalDuration = 0;
 		playedNotes = new ArrayList<Note>();
 		ArrayList<Integer> repeatPosition = new ArrayList<Integer> ();
 		int c = 0;
-		
+
 		for (int i = 0; i < noteList.length; i++) {
 			if (noteList[i].isRepeat()) {
 				repeatPosition.add(i);
 			}
 		}
-		
-        for (int i = 0; i < noteList.length; i++) {
-        	if (!noteList[i].isRepeat()) {
-        		playedNotes.add(noteList[i]);
-        	}
-        	else {
-        		
-        		// double writing the repeated line
-        		for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
-        			playedNotes.add(noteList[j]);
-        		}
-        		for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
-        			playedNotes.add(noteList[j]);
-        		}
-        		// override the pointer across repeated section in the original noteList
-        		i += repeatPosition.get(c+1) - repeatPosition.get(c);
-        		// move the pointer of the repeated position to the next one the the repeatPosition
-        		c += 2;
-        	}
-        }
-        
-        for (int k = 0; k < playedNotes.size(); k++) {
-        	totalDuration += playedNotes.get(k).getDuration();
-        } 
-        return totalDuration;
+
+		for (int i = 0; i < noteList.length; i++) {
+			if (!noteList[i].isRepeat()) {
+				playedNotes.add(noteList[i]);
+			}
+			else {
+
+				// double writing the repeated line
+				for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
+					playedNotes.add(noteList[j]);
+				}
+				for (int j = repeatPosition.get(c); j <= repeatPosition.get(c+1); j++) {
+					playedNotes.add(noteList[j]);
+				}
+				// override the pointer across repeated section in the original noteList
+				i += repeatPosition.get(c+1) - repeatPosition.get(c);
+				// move the pointer of the repeated position to the next one the the repeatPosition
+				c += 2;
+			}
+		}
+
+		for (int k = 0; k < playedNotes.size(); k++) {
+			totalDuration += playedNotes.get(k).getDuration();
+		} 
+		return totalDuration;
 	}
 	/**
 	 * play your song so that it can be heard on the computer’s
 speakers.
 	 */
 	public void play(){
-		
+
 		// set up the playedNotes first in case the duration method is not called before play
 		getTotalDuration();
-        for (int k = 0; k < playedNotes.size(); k++) {
-        	playedNotes.get(k).play();
-        }
-        
+		for (int k = 0; k < playedNotes.size(); k++) {
+			playedNotes.get(k).play();
+		}
+
 	}
-		
-		
+
+
 
 	/**
 	 * modify the state of the notes in your internal array so that
@@ -189,7 +189,7 @@ nothing. In such a case, no notes are changed
 		for (int i=0; i<noteList.length;i++){
 			presentOctave=noteList[i].getOctave();
 			//how to catch exception inside note class?
-				noteList[i].setOctave(presentOctave+1);
+			noteList[i].setOctave(presentOctave+1);
 
 		}
 		return true;
@@ -216,17 +216,17 @@ nothing. In such a case, no notes are changed
 			noteList[noteList.length-i-1]=tempNote;
 		}
 	}
-    /**
-     * return the noteList of the song
-     * @return
-     */
+	/**
+	 * return the noteList of the song
+	 * @return
+	 */
 	public Note[] getNoteList() {
 		return noteList;
 	}
-    /**
-     * return the playedNotes of the song
-     * @return
-     */
+	/**
+	 * return the playedNotes of the song
+	 * @return
+	 */
 	public ArrayList<Note> getPlayedNotes() {
 		return playedNotes;
 	}
