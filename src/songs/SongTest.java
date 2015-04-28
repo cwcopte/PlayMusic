@@ -40,6 +40,7 @@ public class SongTest {
 		assertEquals("something", FirstSong.getTitle());
 		assertEquals("He's a Pirate", SecondSong.getTitle());
 		assertEquals("Pop Goes the Weasel", ThirdSong.getTitle());
+		//System.out.print(FourthSong.toString());
 		assertEquals("Game of Thrones", FourthSong.getTitle());
 	}
 
@@ -57,20 +58,17 @@ public class SongTest {
 		assertEquals(3.6, SecondSong.getTotalDuration(),.001);
 		//System.out.println(FourthSong.getTotalDuration());
 		assertEquals(9.8, ThirdSong.getTotalDuration(),.001);
-		System.out.println(FourthSong.getTotalDuration());
-		//25.19999999967
 		assertEquals(25.2, FourthSong.getTotalDuration(), .001);
-		
 	}
 
 	@Test
 	public void testPlay() {
+		
 		// test first song, which does not have reaptead section
-		//FourthSong.play();
 		FirstSong.play();
-		System.out.println(FirstSong.playedNotes.toString());
+		//System.out.println(FirstSong.playedNotes.toString());
 		for(int i = 0; i < 25; i++) {
-			if (!FirstSong.noteList[i].toString().equals(FirstSong.playedNotes.get(i).toString())) {
+			if (!FirstSong.getNoteList()[i].toString().equals(FirstSong.getPlayedNotes().get(i).toString())) {
 				flag = false;
 			}
 		assertTrue(flag);
@@ -78,14 +76,15 @@ public class SongTest {
 		
 		// test the second song, which has one repeated section
 		SecondSong.play();
+		//System.out.print(SecondSong.playedNotes.toString());
 		for(int i = 0; i < 9; i++) { 
-			if (!(SecondSong.noteList[i].toString().equals(SecondSong.playedNotes.get(i).toString())) && !(SecondSong.playedNotes.get(i+9).equals(SecondSong.noteList[i]))) {
+			if (!(SecondSong.getNoteList()[i].toString().equals(SecondSong.getPlayedNotes().get(i).toString())) && !(SecondSong.getPlayedNotes().get(i+9).equals(SecondSong.getNoteList()[i]))) {
 				flag = false;
 			}
 		}
 		assertTrue(flag);
 		for(int i = 9; i < 18; i++) {
-			if (!(SecondSong.noteList[i].toString().equals(SecondSong.playedNotes.get(i+9).toString()))) {
+			if (!(SecondSong.getNoteList()[i].toString().equals(SecondSong.getPlayedNotes().get(i+9).toString()))) {
 				flag = false;
 			}
 		}
@@ -93,11 +92,12 @@ public class SongTest {
 		// test the third song, which do not have reapted section
 		ThirdSong.play();
 		for(int i = 0; i < 25; i++) {
-			if (!ThirdSong.noteList[i].toString().equals(ThirdSong.playedNotes.get(i).toString())) {
+			if (!ThirdSong.getNoteList()[i].toString().equals(ThirdSong.getPlayedNotes().get(i).toString())) {
 				flag = false;
 			}
 		assertTrue(flag);
 		}
+		FourthSong.play();
 	}
 
 	@Test
@@ -172,40 +172,41 @@ public class SongTest {
 	@Test
 	public void testReverse() {
 
-		Note[] noteListTest = FirstSong.noteList.clone();
+		Note[] noteListTest = FirstSong.getNoteList().clone();
 		FirstSong.reverse();
-		assertFalse(Arrays.toString(FirstSong.noteList).equals(Arrays.toString(noteListTest)));
+		assertFalse(Arrays.toString(FirstSong.getNoteList()).equals(Arrays.toString(noteListTest)));
 		FirstSong.reverse();
-		assertTrue(Arrays.toString(FirstSong.noteList).equals(Arrays.toString(noteListTest)));
+		assertTrue(Arrays.toString(FirstSong.getNoteList()).equals(Arrays.toString(noteListTest)));
 		
-		Note[] noteListTest2 = SecondSong.noteList.clone();
+		Note[] noteListTest2 = SecondSong.getNoteList().clone();
 		SecondSong.reverse();
-		assertFalse(Arrays.toString(SecondSong.noteList).equals(Arrays.toString(noteListTest2)));
+		assertFalse(Arrays.toString(SecondSong.getNoteList()).equals(Arrays.toString(noteListTest2)));
 		SecondSong.reverse();
-		assertTrue(Arrays.toString(SecondSong.noteList).equals(Arrays.toString(noteListTest2)));
+		assertTrue(Arrays.toString(SecondSong.getNoteList()).equals(Arrays.toString(noteListTest2)));
 		
-		Note[] noteListTest3 = ThirdSong.noteList.clone();
+		Note[] noteListTest3 = ThirdSong.getNoteList().clone();
 		ThirdSong.reverse();
-		assertFalse(Arrays.toString(ThirdSong.noteList).equals(Arrays.toString(noteListTest3)));
+		assertFalse(Arrays.toString(ThirdSong.getNoteList()).equals(Arrays.toString(noteListTest3)));
 		ThirdSong.reverse();
-		assertTrue(Arrays.toString(ThirdSong.noteList).equals(Arrays.toString(noteListTest3)));
+		assertTrue(Arrays.toString(ThirdSong.getNoteList()).equals(Arrays.toString(noteListTest3)));
 	
-		Note[] noteListTest4 = FourthSong.noteList.clone();
+		Note[] noteListTest4 = FourthSong.getNoteList().clone();
 		FourthSong.reverse();
-		assertFalse(Arrays.toString(FourthSong.noteList).equals(Arrays.toString(noteListTest4)));
+		assertFalse(Arrays.toString(FourthSong.getNoteList()).equals(Arrays.toString(noteListTest4)));
 		FourthSong.reverse();
-		assertTrue(Arrays.toString(FourthSong.noteList).equals(Arrays.toString(noteListTest4)));
+		assertTrue(Arrays.toString(FourthSong.getNoteList()).equals(Arrays.toString(noteListTest4)));
 	}
 
 	@Test
 	public void testToString() {
 		
-		System.out.print(NinethSong.toString());
+		//System.out.print(NinethSong.toString());
 		assertEquals("something\nsomeone\n2.0\n0.25 D 4 NATURAL false\n0.25 D 4 NATURAL false\n0.5 E 4 NATURAL false\n"
 				+ "0.5 D 4 NATURAL false\n0.5 G 4 NATURAL false\n", EighthSong.toString());
 		assertEquals("Pop Goes the Weasel\nUnknown\n1.8\n0.2 C 4 NATURAL false\n0.4 F 4 NATURAL false\n0.2 F 4 NATURAL false\n0.4 G 4 NATURAL false\n"
 				+ "0.2 G 4 NATURAL false\n0.2 A 4 NATURAL false\n0.2 C 5 NATURAL false\n", NinethSong.toString());
-/*		FourthSong.play();
-		System.out.print(FourthSong.toString());*/
+		//FourthSong.play();
+		//System.out.print(FourthSong.toString());
 	}
 }
+
