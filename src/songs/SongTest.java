@@ -18,6 +18,10 @@ public class SongTest {
 	private Song EighthSong;
 	private Song NinethSong;
 	private boolean flag;
+	private Note[] testNote1;
+	private Note[] testNote2;
+	private Note[] testNote3;
+	private Note[] testNote4;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -171,42 +175,46 @@ public class SongTest {
 
 	@Test
 	public void testReverse() {
-
-		Note[] noteListTest = FirstSong.getNoteList().clone();
-		FirstSong.reverse();
-		assertFalse(Arrays.toString(FirstSong.getNoteList()).equals(Arrays.toString(noteListTest)));
-		FirstSong.reverse();
-		assertTrue(Arrays.toString(FirstSong.getNoteList()).equals(Arrays.toString(noteListTest)));
+		int length1 = FirstSong.getNoteList().length;
+        Note[] testNote = new Note[length1];
+        for (int i = 0; i < length1; i ++) {
+        	testNote[i] = FirstSong.getNoteList()[length1 - i - 1];
+        }
+        FirstSong.reverse();
+        assertTrue(Arrays.toString(FirstSong.getNoteList()).equals(Arrays.toString(testNote)));
+        
+        int length2 = SecondSong.getNoteList().length;
+        Note[] testNote2 = new Note[length2];
+        for (int i = 0; i < length2; i ++) {
+        	testNote2[i] = SecondSong.getNoteList()[length2 - i - 1];
+        }
+        SecondSong.reverse();
+        assertTrue(Arrays.toString(SecondSong.getNoteList()).equals(Arrays.toString(testNote2)));
 		
-		Note[] noteListTest2 = SecondSong.getNoteList().clone();
-		SecondSong.reverse();
-		assertFalse(Arrays.toString(SecondSong.getNoteList()).equals(Arrays.toString(noteListTest2)));
-		SecondSong.reverse();
-		assertTrue(Arrays.toString(SecondSong.getNoteList()).equals(Arrays.toString(noteListTest2)));
-		
-		Note[] noteListTest3 = ThirdSong.getNoteList().clone();
-		ThirdSong.reverse();
-		assertFalse(Arrays.toString(ThirdSong.getNoteList()).equals(Arrays.toString(noteListTest3)));
-		ThirdSong.reverse();
-		assertTrue(Arrays.toString(ThirdSong.getNoteList()).equals(Arrays.toString(noteListTest3)));
-	
-		Note[] noteListTest4 = FourthSong.getNoteList().clone();
-		FourthSong.reverse();
-		assertFalse(Arrays.toString(FourthSong.getNoteList()).equals(Arrays.toString(noteListTest4)));
-		FourthSong.reverse();
-		assertTrue(Arrays.toString(FourthSong.getNoteList()).equals(Arrays.toString(noteListTest4)));
+        int length3 = ThirdSong.getNoteList().length;
+        Note[] testNote3 = new Note[length3];
+        for (int i = 0; i < length3; i ++) {
+        	testNote3[i] = ThirdSong.getNoteList()[length3 - i - 1];
+        }
+        ThirdSong.reverse();
+        assertTrue(Arrays.toString(ThirdSong.getNoteList()).equals(Arrays.toString(testNote3)));
+        
+        int length4 = FourthSong.getNoteList().length;
+        Note[] testNote4 = new Note[length4];
+        for (int i = 0; i < length4; i ++) {
+        	testNote4[i] = FourthSong.getNoteList()[length4 - i - 1];
+        }
+        FourthSong.reverse();
+        assertTrue(Arrays.toString(FourthSong.getNoteList()).equals(Arrays.toString(testNote4)));
 	}
 
 	@Test
 	public void testToString() {
 		
-		//System.out.print(NinethSong.toString());
 		assertEquals("something\nsomeone\n2.0\n0.25 D 4 NATURAL false\n0.25 D 4 NATURAL false\n0.5 E 4 NATURAL false\n"
 				+ "0.5 D 4 NATURAL false\n0.5 G 4 NATURAL false\n", EighthSong.toString());
 		assertEquals("Pop Goes the Weasel\nUnknown\n1.8\n0.2 C 4 NATURAL false\n0.4 F 4 NATURAL false\n0.2 F 4 NATURAL false\n0.4 G 4 NATURAL false\n"
 				+ "0.2 G 4 NATURAL false\n0.2 A 4 NATURAL false\n0.2 C 5 NATURAL false\n", NinethSong.toString());
-		//FourthSong.play();
-		//System.out.print(FourthSong.toString());
+
 	}
 }
-
