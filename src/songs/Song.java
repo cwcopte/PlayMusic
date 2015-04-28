@@ -215,11 +215,20 @@ nothing. In such a case, no notes are changed
 			noteList[noteList.length-i-1]=tempNote;
 		}
 	}
-	 
+    /**
+     * return the noteList of the song
+     * @return
+     */
 	public Note[] getNoteList() {
 		return noteList;
 	}
-
+    /**
+     * return the playedNotes of the song
+     * @return
+     */
+	public ArrayList<Note> getPlayedNotes() {
+		return playedNotes;
+	}
 	/**
 	 * for debugging and for the purposes of also being able to write some kind of unit test. 
 Arrays.toString returns a string representation of an array.
